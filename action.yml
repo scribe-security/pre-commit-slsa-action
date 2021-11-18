@@ -1,0 +1,28 @@
+name: 'pre-commit-slsa'
+description: 'Validate commit slsa attestations'
+author: mikey strauss
+inputs:
+  config:
+    description: 'config path'
+    default: .cocosign.yaml
+  command:
+    description: 'command type'
+    required: true
+    default: verify
+  verbose:
+    description: 'verbose output'
+    default: false
+  name:
+    description: 'name of configuration'
+    default: pre-commit-slsa-verify
+runs:
+  using: docker
+  image: docker://scribesecuriy.jfrog.io/scribe-docker-public-local/pre-commit-slsa:latest 
+  args:
+    - --config=${{ inputs.config }}
+    - --command=${{ inputs.command }}
+    - --verbose=${{ inputs.verbose }}
+    - --name=${{ inputs.name }}
+branding:
+  icon: shield
+  color: green
